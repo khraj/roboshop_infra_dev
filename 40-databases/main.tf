@@ -65,7 +65,7 @@ resource "terraform_data" "redis" {
     user        = "ec2-user"
     password    = "DevOps321"
   }
-  #terraform copeies this file to mongodb server
+  #terraform copeies this file to redis server
   provisioner "file" {
     source      = "bootstrap.sh"
     destination = "/tmp/bootstrap.sh"
@@ -76,6 +76,48 @@ resource "terraform_data" "redis" {
         "chmod +x /tmp/bootstrap.sh",
         /* "sudo sh /tmp/bootstrap.sh", */
         "sudo sh /tmp/bootstrap.sh redis"
+    ]
+  }
+
+}
+
+
+resource "aws_instance" "rabbitmq" {
+  ami                    = local.ami_id
+  instance_type          = "t3.micro"
+  vpc_security_group_ids = [local.rabbitmq_sg_id]
+  subnet_id              = local.database_subnet_id
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "${local.common_name_suffix}-rabbitmq"
+    }
+  )
+}
+
+resource "terraform_data" "rabbitmq" {
+  triggers_replace = [
+    aws_instance.rabbitmq.id
+  ]
+
+  connection {
+    type        = "ssh"
+    host        = aws_instance.rabbitmq.private_ip
+    user        = "ec2-user"
+    password    = "DevOps321"
+  }
+  #terraform copeies this file to rabbitmq server
+  provisioner "file" {
+    source      = "bootstrap.sh"
+    destination = "/tmp/bootstrap.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+        "chmod +x /tmp/bootstrap.sh",
+        /* "sudo sh /tmp/bootstrap.sh", */
+        "sudo sh /tmp/bootstrap.sh rabbitmq"
     ]
   }
 
