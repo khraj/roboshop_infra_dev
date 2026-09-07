@@ -23,10 +23,16 @@ resource "terraform_data" "mongodb" {
     user        = "ec2-user"
     password    = "DevOps321"
   }
+  #terraform copeies this file to mongodb server
+  provisioner "file" {
+    source      = "bootstrap.sh"
+    destination = "/tmp/bootstrap.sh"
+  }
 
   provisioner "remote-exec" {
     inline = [
         "echo \"hello world\""
     ]
   }
+
 }
