@@ -6,9 +6,9 @@ dnf install ansible git -y
 #ansible-pull -U https://github.com/khraj/ansible-roboshop-roles-tf.git -e component=$component main.yaml
 
 
-REPO_URL = "https://github.com/khraj/ansible-roboshop-roles-tf.git"
-REPO_DIR = /opt/roboshop/ansible
-ANSIBLE_DIR = ansible-roboshop-roles-tf
+REPO_URL="https://github.com/khraj/ansible-roboshop-roles-tf.git"
+REPO_DIR=/opt/roboshop/ansible
+ANSIBLE_DIR=ansible-roboshop-roles-tf
 
 
 mkdir -p $REPO_DIR
