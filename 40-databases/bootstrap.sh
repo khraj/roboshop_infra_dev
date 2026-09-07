@@ -3,9 +3,7 @@ component=$1
 environment=$2
 dnf install ansible -y
 dnf install ansible git -y
-dnf install -y python3-pip
-pip3 install boto3 botocore
-ansible-galaxy collection install amazon.aws
+
 
 #ansible-pull -U https://github.com/khraj/ansible-roboshop-roles-tf.git -e component=$component main.yaml
 
