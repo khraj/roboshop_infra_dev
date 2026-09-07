@@ -21,7 +21,7 @@ resource "terraform_data" "mongodb" {
     type        = "ssh"
     host        = aws_instance.mongodb.private_ip
     user        = "ec2-user"
-    password    = DevOps321
+    password    = "DevOps321"
   }
 
   provisioner "remote-exec" {
