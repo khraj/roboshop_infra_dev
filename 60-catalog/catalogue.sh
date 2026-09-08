@@ -1,0 +1,30 @@
+#!/bin/bash
+component=$1
+environment=$2
+dnf install ansible -y
+dnf install ansible git -y
+dnf install -y python3-pip
+pip3 install boto3 botocore
+ansible-galaxy collection install amazon.aws
+
+#ansible-pull -U https://github.com/khraj/ansible-roboshop-roles-tf.git -e component=$component main.yaml
+
+
+REPO_URL="https://github.com/khraj/ansible-roboshop-roles-tf.git"
+REPO_DIR=/opt/roboshop/ansible
+ANSIBLE_DIR=ansible-roboshop-roles-tf
+
+
+mkdir -p $REPO_DIR
+mkdir -p /var/log/roboshop
+touch /var/log/roboshop/ansible.log
+cd $REPO_DIR
+if [ ! -d "$ANSIBLE_DIR" ]; then
+    git clone $REPO_URL
+    cd $ANSIBLE_DIR
+else
+    cd $ANSIBLE_DIR
+    git pull
+fi
+
+ansible-playbook -e component=$component -e env=$environment main.yaml

@@ -2,7 +2,7 @@ resource "aws_lb" "backendalb" {
   name               = "${local.common_name_suffix}-backend-alb" #roboshop-dev-backend-alb
   internal           = true
   load_balancer_type = "application"
-  security_groups    = [local.backend-loadbalancer_sg_id]
+  security_groups    = [local.backend_loadbalancer_sg_id]
   subnets            = local.private_subnet_ids
 
   enable_deletion_protection = false
