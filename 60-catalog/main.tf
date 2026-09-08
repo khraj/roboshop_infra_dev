@@ -73,7 +73,7 @@ resource "aws_lb_target_group" "catalogue" {
     interval = 10
     matcher = "200-299"
     path = "/health"
-    port_number = 8080
+    port = 8080
     protocol = "HTTP"
     timeout = 2
     unhealthy_threshold = 2
@@ -83,13 +83,13 @@ resource "aws_lb_target_group" "catalogue" {
 resource "aws_launch_template" "catalogue" {
   name = "catalogue"
 
-  image_id = caws_ami_from_instance.catalogue_ami.catalogue
+  image_id = aws_ami_from_instance.catalogue_ami.id
 
   instance_initiated_shutdown_behavior = "terminate"
 
   instance_type = "t3.micro"
 
-  vpc_security_group_ids = local.catalogue_sg_id
+  vpc_security_group_ids = [local.catalogue_sg_id]
 
   tag_specifications {
     resource_type = "instance"
@@ -134,7 +134,7 @@ resource "aws_autoscaling_group" "catalogue" {
     id      = aws_launch_template.catalogue.id
     version = aws_launch_template.catalogue.latest_version
   }
-  vpc_zone_identifier       = local.private_subnet_ids
+  vpc_zone_identifier       = [local.private_subnet_ids]
   target_group_arns         = [aws_lb_target_group.catalogue.arn]
   
   dynamic "tag" {
@@ -160,7 +160,7 @@ resource "aws_autoscaling_group" "catalogue" {
 
 resource "aws_autoscaling_policy" "example" {
 
-  autoscaling_group_name = aws_autoscaling_group.catalog.name
+  autoscaling_group_name = aws_autoscaling_group.catalogue.name
   name                   = "${local.common_name_suffix}-catalogue"
   policy_type            = "TargetTrackingScaling"
 
