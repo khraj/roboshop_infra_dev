@@ -172,3 +172,19 @@ resource "aws_autoscaling_policy" "example" {
     target_value = 75.0
   }
 }
+
+resource "aws_lb_listener_rule" "catalogue" {
+  listener_arn = aws_lb_listener.backend_alb.arn
+  priority     = 100
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.catalogue.arn
+  }
+
+  condition {
+    host_header {
+      values = ["catalogue.backend-alb-${var.environment}.${var.domain_name}"]
+    }
+  }
+}
