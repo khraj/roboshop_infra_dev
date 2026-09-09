@@ -158,7 +158,7 @@ resource "aws_autoscaling_group" "catalogue" {
 
 }
 
-resource "aws_autoscaling_policy" "example" {
+resource "aws_autoscaling_policy" "catalogue" {
 
   autoscaling_group_name = aws_autoscaling_group.catalogue.name
   name                   = "${local.common_name_suffix}-catalogue"
@@ -174,7 +174,7 @@ resource "aws_autoscaling_policy" "example" {
 }
 
 resource "aws_lb_listener_rule" "catalogue" {
-  listener_arn = aws_lb_listener.backend_alb.arn
+  listener_arn = local.backend_alb_listner_arn
   priority     = 100
 
   action {
