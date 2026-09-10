@@ -17,6 +17,6 @@ locals {
   rabbitMQ_sg_id            = data.aws_ssm_parameter.rabbitMQ_sg_id.value
   mysql_sg_id               = data.aws_ssm_parameter.mysql_sg_id.value
   catalogue_sg_id           = data.aws_ssm_parameter.catalogue_sg_id.value
-  frontend_alb_sg_id        = data.aws_ssm_parameter.frontend_alb_sg_id
+  frontend_sg_id            = data.aws_ssm_parameter.frontend_sg_id.value
 
 }

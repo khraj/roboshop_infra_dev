@@ -92,9 +92,9 @@ resource "aws_security_group_rule" "catalogue_backend_alb" {
 }
 
 
-resource "aws_security_group_rule" "frontend_alb_public" {
+resource "aws_security_group_rule" "frontend_public" {
   type                     = "ingress"
-  security_group_id        = local.frontend_alb_sg_id
+  security_group_id        = local.frontend_sg_id
   cidr_blocks               = ["0.0.0.0/0"]
   from_port                = 443
   to_port                  = 443
