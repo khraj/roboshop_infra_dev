@@ -1,0 +1,46 @@
+# ==========================================
+# Core Terraform directories and dependencies
+# ==========================================
+# Contains downloaded provider plugins and modules. Can be recreated via 'terraform init'.
+.terraform/
+
+# ==========================================
+# State files and backups
+# ==========================================
+# These files contain sensitive infrastructure data and should never be in source control.
+*.tfstate
+*.tfstate.*
+
+# Crash logs generated if Terraform fails catastrophically
+crash.log
+crash.*.log
+
+# ==========================================
+# Variables and Secrets
+# ==========================================
+# Exclude all variable files as they typically contain sensitive credentials or env-specific values.
+*.tfvars
+*.tfvars.json
+
+# Exclude automatically loaded variable files
+*.auto.tfvars
+*.auto.tfvars.json
+
+# ==========================================
+# Configuration Overrides
+# ==========================================
+# Ignore local override files meant for individual development testing
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# ==========================================
+# CLI Configurations and Plans
+# ==========================================
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore explicit plan files (they can include secrets and state data)
+*tfplan*
