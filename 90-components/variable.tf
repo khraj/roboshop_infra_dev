@@ -7,5 +7,15 @@ variable "rule_priority" {
 }
 
 variable "domain_name" {
+  default = "inkweave.dpdns.org"
+}
 
+variable "project_name" {
+  type = string
+  default = "roboshop"
+}
+
+variable "environment" {
+  type = string
+  default = "dev"
 }
