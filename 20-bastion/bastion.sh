@@ -16,3 +16,8 @@ git clone https://github.com/khraj/roboshop_infra_dev.git
 cd roboshop_infra_dev/40-databases
 terraform init
 terraform apply -auto-approve
+
+
+#installing awscli
+
+sudo yum install awscli -y
