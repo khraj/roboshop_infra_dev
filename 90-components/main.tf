@@ -11,4 +11,6 @@ module "component" {
     component = each.key
     rule_priority = each.value.rule_priority
     domain_name = var.domain_name
+    project_name = var.project_name
+    environment  = var.environment
 }
