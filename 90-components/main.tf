@@ -1,6 +1,14 @@
+# module "component" {
+#     source = "../../terraform-roboshop-component"
+#     component = var.component
+#     rule_priority = var.rule_priority
+#     domain_name = var.domain_name
+# }
+
 module "component" {
-    source = "../../terraform-roboshop-component"
-    component = var.component
-    rule_priority = var.rule_priority
+    for_each = var.components
+    source = "git::https://github.com/khraj/terraform_roboshop-component.git?ref=main"
+    component = each.key
+    rule_priority = each.value.rule_priority
     domain_name = var.domain_name
 }
