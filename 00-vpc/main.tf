@@ -7,6 +7,6 @@ module "vpc" {
     public_cidrs_subnet = var.public_cidrs_subnet
     private_cidrs_subnet = var.private_cidrs_subnet
     database_cidrs_subnet = var.database_cidrs_subnet
-    is_peering_required = true
+    is_peering_required = false
 }
 

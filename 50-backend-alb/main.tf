@@ -2,7 +2,7 @@ resource "aws_lb" "backend_alb" {
   name               = "${local.common_name_suffix}-backend-alb" #roboshop-dev-backend-alb
   internal           = true
   load_balancer_type = "application"
-  security_groups    = [local.backend_loadbalancer_sg_id]
+  security_groups    = [local.backend_alb_sg_id]
   subnets            = local.private_subnet_ids
 
   enable_deletion_protection = false
@@ -27,7 +27,7 @@ resource "aws_lb_listener" "backend_alb" {
 
     fixed_response {
       content_type = "text/plain"
-      message_body = "Hello I'm from backend- ALB HTTP"
+      message_body = "Hello I'm from backend-ALB HTTP"
       status_code  = "200"
     }
   }

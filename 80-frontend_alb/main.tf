@@ -1,8 +1,8 @@
 resource "aws_lb" "frontend_alb" {
-  name               = "${local.common_name_suffix}-frontend-alb" #roboshop-dev-backend-alb
+  name               = "${local.common_name_suffix}-frontend-alb" #roboshop-dev-frontend-alb
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [local.frontend_sg_id]
+  security_groups    = [local.frontend_alb_sg_id]
   subnets            = local.public_subnet_ids
 
   enable_deletion_protection = false
@@ -10,10 +10,28 @@ resource "aws_lb" "frontend_alb" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.common_name_suffix}-backend-alb"
+      Name = "${local.common_name_suffix}-frontend-alb"
     }
   )
 }
+
+/* resource "aws_lb_target_group" "frontend_alb" {
+  name     = "${local.common_name_suffix}"
+  port     = 80 #if frontend port is 80 for frontend it is 8080
+  protocol = "HTTP"
+  vpc_id   = local.vpc_id
+  deregistration_delay = 60
+  health_check {
+    healthy_threshold = 2
+    interval = 10
+    matcher = "200-299"
+    path = "/"
+    port = 80
+    protocol = "HTTP"
+    timeout = 2
+    unhealthy_threshold = 2
+  }
+} */
 
 resource "aws_lb_listener" "frontend_alb" {
   load_balancer_arn = aws_lb.frontend_alb.arn
@@ -27,7 +45,7 @@ resource "aws_lb_listener" "frontend_alb" {
 
     fixed_response {
       content_type = "text/html"
-      message_body = "<h1> Hi I'm from frontend alb </h1>"
+      message_body = "<h1>Hi, I am from HTTPS frontend ALB</h1>"
       status_code  = "200"
     }
   }
