@@ -15,7 +15,7 @@ resource "aws_lb" "frontend_alb" {
   )
 }
 
-/* resource "aws_lb_target_group" "frontend_alb" {
+resource "aws_lb_target_group" "frontend_alb" {
   name     = "${local.common_name_suffix}"
   port     = 80 #if frontend port is 80 for frontend it is 8080
   protocol = "HTTP"
@@ -31,7 +31,7 @@ resource "aws_lb" "frontend_alb" {
     timeout = 2
     unhealthy_threshold = 2
   }
-} */
+}
 
 resource "aws_lb_listener" "frontend_alb" {
   load_balancer_arn = aws_lb.frontend_alb.arn
@@ -41,14 +41,9 @@ resource "aws_lb_listener" "frontend_alb" {
   certificate_arn   = local.frontend_certificate_arn
 
   default_action {
-    type = "fixed-response"
-
-    fixed_response {
-      content_type = "text/html"
-      message_body = "<h1>Hi, I am from HTTPS frontend ALB</h1>"
-      status_code  = "200"
+    type = "forward"
+    target_group_arn = aws_lb_target_group.frontend_alb.arn
     }
-  }
 }
 
 resource "aws_route53_record" "frontend_alb" {
