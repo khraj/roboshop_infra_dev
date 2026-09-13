@@ -22,7 +22,7 @@ if [ ! -d "/home/ec2-user/roboshop_infra_dev" ]; then
     sudo -u ec2-user git clone https://github.com/khraj/roboshop_infra_dev.git
 fi
 
-sudo -u ec2-user bash -c '
+sudo -u ec2-user bash -c
     cd /home/ec2-user/roboshop_infra_dev/40-databases
     terraform init
     terraform apply -auto-approve
